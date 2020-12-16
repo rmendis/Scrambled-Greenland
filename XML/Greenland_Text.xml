@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Greenland_Text -->
+<!-- Author: blkbutterfly74 -->
+<!-- DateCreated: 2/18/2018 6:45:01 PM -->
+<GameData>
+	<FrontEndText>
+
+		<!-- Texts for Maps -->
+		<Row Tag="LOC_GREENLAND_MAP_NAME">
+			<Text>Scrambled Greenland</Text>
+		</Row>
+		<Row Tag="LOC_GREENLAND_MAP_DESCRIPTION">
+			<Text>An internally randomized map of Greenland and Iceland.</Text>
+		</Row>
+	</FrontEndText>
+</GameData>

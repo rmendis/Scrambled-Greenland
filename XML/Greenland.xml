@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Greenland -->
+<!-- Author: blkbutterfly74 -->
+<!-- DateCreated: 8/14/2017 11:49:33 PM -->
+<GameInfo>
+	<GlobalParameters>
+		<Replace Name="RIVER_SOURCE_RANGE_DEFAULT" Value="8" />
+
+		<Replace Name="RIVER_PLOTS_PER_RIVER_EDGE_DEFAULT" Value="24" />
+	</GlobalParameters>
+</GameInfo>
+
