@@ -5,14 +5,14 @@
     <Name>Scrambled Greenland</Name>
     <Guid>9e6d91f0-4b82-4e85-9c6c-dae7f58a089a</Guid>
     <ProjectGuid>635a93a4-f784-415f-a337-432578857c62</ProjectGuid>
-    <ModVersion>6</ModVersion>
+    <ModVersion>7</ModVersion>
     <Teaser>An internally randomised map of Greenland. Small size map.</Teaser>
     <Description>An internally randomised map of Greenland &amp; Iceland. Small size map.
 
 NOTE: Disable this map/mod when using other mods or maps.</Description>
     <Authors>blkbutterfly74</Authors>
     <SpecialThanks>Firaxis</SpecialThanks>
-    <AffectsSavedGames>true</AffectsSavedGames>
+    <AffectsSavedGames>false</AffectsSavedGames>
     <SupportsSinglePlayer>true</SupportsSinglePlayer>
     <SupportsMultiplayer>true</SupportsMultiplayer>
     <SupportsHotSeat>true</SupportsHotSeat>
@@ -20,6 +20,7 @@ NOTE: Disable this map/mod when using other mods or maps.</Description>
     <RootNamespace>Scrambled Greenland</RootNamespace>
     <FrontEndActionData><![CDATA[<FrontEndActions><UpdateDatabase id="UpdateConfig"><File>XML/Config.xml</File></UpdateDatabase><UpdateText id="UpdateText"><File>XML/Greenland_Text.xml</File></UpdateText></FrontEndActions>]]></FrontEndActionData>
     <InGameActionData><![CDATA[<InGameActions><UpdateDatabase id="AddGreenlandParams"><File>XML/Greenland.xml</File></UpdateDatabase><ImportFiles id="ImportMap"><File>Maps/Greenland.lua</File></ImportFiles></InGameActions>]]></InGameActionData>
+    <CompatibleVersions>1.2,2.0</CompatibleVersions>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Default' ">
     <OutputPath>.</OutputPath>
