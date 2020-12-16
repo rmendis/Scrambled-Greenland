@@ -5,11 +5,9 @@
     <Name>Scrambled Greenland</Name>
     <Guid>9e6d91f0-4b82-4e85-9c6c-dae7f58a089a</Guid>
     <ProjectGuid>635a93a4-f784-415f-a337-432578857c62</ProjectGuid>
-    <ModVersion>7</ModVersion>
+    <ModVersion>8</ModVersion>
     <Teaser>An internally randomised map of Greenland. Small size map.</Teaser>
-    <Description>An internally randomised map of Greenland &amp; Iceland. Small size map.
-
-NOTE: Disable this map/mod when using other mods or maps.</Description>
+    <Description>An internally randomised map of Greenland &amp; Iceland. Small size map.</Description>
     <Authors>blkbutterfly74</Authors>
     <SpecialThanks>Firaxis</SpecialThanks>
     <AffectsSavedGames>false</AffectsSavedGames>
@@ -19,8 +17,11 @@ NOTE: Disable this map/mod when using other mods or maps.</Description>
     <AssemblyName>Scrambled Greenland</AssemblyName>
     <RootNamespace>Scrambled Greenland</RootNamespace>
     <FrontEndActionData><![CDATA[<FrontEndActions><UpdateDatabase id="UpdateConfig"><File>XML/Config.xml</File></UpdateDatabase><UpdateText id="UpdateText"><File>XML/Greenland_Text.xml</File></UpdateText></FrontEndActions>]]></FrontEndActionData>
-    <InGameActionData><![CDATA[<InGameActions><UpdateDatabase id="AddGreenlandParams"><File>XML/Greenland.xml</File></UpdateDatabase><ImportFiles id="ImportMap"><File>Maps/Greenland.lua</File></ImportFiles></InGameActions>]]></InGameActionData>
+    <InGameActionData><![CDATA[<InGameActions><UpdateDatabase id="AddGreenlandParams"><File>XML/Greenland.xml</File></UpdateDatabase><ImportFiles id="ImportMap"><File>Maps/Greenland.lua</File><File>Maps/Greenland_XP2.lua</File></ImportFiles></InGameActions>]]></InGameActionData>
     <CompatibleVersions>1.2,2.0</CompatibleVersions>
+    <AssociationData><![CDATA[<Associations>
+  <Reference type="Dlc" title="Expansion: Gathering Storm" id="4873eb62-8ccc-4574-b784-dda455e74e68" />
+</Associations>]]></AssociationData>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Default' ">
     <OutputPath>.</OutputPath>
@@ -31,6 +32,9 @@ NOTE: Disable this map/mod when using other mods or maps.</Description>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Maps\Greenland.lua">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Maps\Greenland_XP2.lua">
       <SubType>Content</SubType>
     </Content>
     <Content Include="XML\Config.xml">

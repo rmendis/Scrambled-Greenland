@@ -4,16 +4,21 @@
 <!-- DateCreated: 2/18/2018 6:44:00 PM -->
 <GameInfo>
 	<Maps>
-		<!-- for R&F -->
-		<Row Domain="Maps:Expansion1Maps" File="{9E6D91F0-4B82-4E85-9C6C-DAE7F58A089A}Maps/Greenland.lua" Name="LOC_GREENLAND_MAP_NAME" Description="LOC_GREENLAND_MAP_DESCRIPTION"/>
+		<!-- for Standard Rules -->
+		<Row Domain="StandardMaps" File="{9E6D91F0-4B82-4E85-9C6C-DAE7F58A089A}Maps/Greenland.lua" Name="LOC_GREENLAND_MAP_NAME" Description="LOC_GREENLAND_MAP_DESCRIPTION"/>
 
-		<!-- for base game -->
-		<Row File="{9E6D91F0-4B82-4E85-9C6C-DAE7F58A089A}Maps/Greenland.lua" Name="LOC_GREENLAND_MAP_NAME" Description="LOC_GREENLAND_MAP_DESCRIPTION"/>
+		<!-- for GS -->
+		<Row Domain="Maps:Expansion2Maps" File="{9E6D91F0-4B82-4E85-9C6C-DAE7F58A089A}Maps/Greenland_XP2.lua" Name="LOC_GREENLAND_MAP_NAME" Description="LOC_GREENLAND_MAP_DESCRIPTION"/>
 	</Maps>
+	<DomainValueFilters>
+		<Row Domain="Maps:Expansion2Maps" Value="{9E6D91F0-4B82-4E85-9C6C-DAE7F58A089A}Maps/Greenland.lua" Filter="difference"/>;
+	</DomainValueFilters>
 
 	<!-- advanced settings -->
 	<Parameters>
 		<Row Key1="Map" Key2="{9E6D91F0-4B82-4E85-9C6C-DAE7F58A089A}Maps/Greenland.lua" ParameterId="WorldAge" Name="LOC_MAP_WORLD_AGE_NAME" Description="LOC_MAP_WORLD_AGE_DESCRIPTION" Domain="WorldAge" DefaultValue="2" ConfigurationGroup="Map" ConfigurationId="world_age" GroupId="MapOptions" Hash="0" SortIndex="230"/>
 		<Row Key1="Map" Key2="{9E6D91F0-4B82-4E85-9C6C-DAE7F58A089A}Maps/Greenland.lua" ParameterId="Rainfall" Name="LOC_MAP_RAINFALL_NAME" Description="LOC_MAP_RAINFALL_DESCRIPTION" Domain="Rainfall" DefaultValue="2" ConfigurationGroup="Map" ConfigurationId="rainfall" GroupId="MapOptions" Hash="0" SortIndex="250"/>
+		<Row Key1="Map" Key2="{9E6D91F0-4B82-4E85-9C6C-DAE7F58A089A}Maps/Greenland_XP2.lua" ParameterId="WorldAge" Name="LOC_MAP_WORLD_AGE_NAME" Description="LOC_MAP_WORLD_AGE_DESCRIPTION" Domain="WorldAge" DefaultValue="2" ConfigurationGroup="Map" ConfigurationId="world_age" GroupId="MapOptions" Hash="0" SortIndex="230"/>
+		<Row Key1="Map" Key2="{9E6D91F0-4B82-4E85-9C6C-DAE7F58A089A}Maps/Greenland_XP2.lua" ParameterId="Rainfall" Name="LOC_MAP_RAINFALL_NAME" Description="LOC_MAP_RAINFALL_DESCRIPTION" Domain="Rainfall" DefaultValue="2" ConfigurationGroup="Map" ConfigurationId="rainfall" GroupId="MapOptions" Hash="0" SortIndex="250"/>
 	</Parameters>
 </GameInfo>
