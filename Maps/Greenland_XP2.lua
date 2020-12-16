@@ -512,14 +512,14 @@ function FeatureGenerator:AddIceToMap()
 		local iPercentNeeded = 100 * iPermanentIceTiles / iWaterTilesOnEdges;
 
 		for x = 0, self.iGridW - 1, 1 do
-			local y = self.iGridH - 1;
-			local i = y * self.iGridW + x;
-			local plot = Map.GetPlotByIndex(i);
-			if (plot ~= nil) then
-				if(TerrainBuilder.CanHaveFeature(plot, g_FEATURE_ICE) == true and IsAdjacentToLandPlot(x, y) == false) then
-					if (TerrainBuilder.GetRandomNumber(100, "Permanent Ice") <= iPercentNeeded) then
-						TerrainBuilder.SetFeatureType(plot, g_FEATURE_ICE);
-						TerrainBuilder.AddIce(plot:GetIndex(), -1); 
+			for y = self.iGridH - 1, 0, -1 do
+				local i = y * self.iGridW + x;
+				local plot = Map.GetPlotByIndex(i);
+				if (plot ~= nil) then
+					if(TerrainBuilder.CanHaveFeature(plot, g_FEATURE_ICE) == true and IsAdjacentToLandPlot(x, y) == false) then
+						if (TerrainBuilder.GetRandomNumber(100, "Permanent Ice") <= iPercentNeeded) then
+							AddIceAtPlot(plot, x, y, -1); 
+						end
 					end
 				end
 			end
@@ -571,12 +571,37 @@ function FeatureGenerator:AddIceToMap()
 					end
 					if (TerrainBuilder.GetRandomNumber(100, "Permanent Ice") <= iFinalPercentNeeded) then
 					    local plot = Map.GetPlotByIndex(targetPlot.PlotIndex);
-						TerrainBuilder.SetFeatureType(plot, g_FEATURE_ICE);
-						TerrainBuilder.AddIce(plot:GetIndex(), kPhaseDetails.RandomEventEnum); 
+						AddIceAtPlot(plot, x, y, kPhaseDetails.RandomEventEnum); 
 					end
 				end
 			end
 		end
+	end
+end
+
+------------------------------------------------------------------------------
+function AddIceAtPlot(plot, iX, iY, iE)
+	local iV = TerrainBuilder.GetRandomNumber(12, "Random variance");
+	local lat = (iY - g_iH/2 + iV)/(g_iH/2);	-- variance to make a more natural looking ice shelf
+	
+	if (lat > 0.78) then
+		local iScore = TerrainBuilder.GetRandomNumber(100, "Resource Placement Score Adjust");
+
+		iScore = iScore + lat * 100;
+
+		if(IsAdjacentToLandPlot(iX,iY) == true) then
+			iScore = iScore / 2.0;
+		end
+
+		local iAdjacent = TerrainBuilder.GetAdjacentFeatureCount(plot, g_FEATURE_ICE);
+		iScore = iScore + 10.0 * iAdjacent;
+
+		if(iScore > 130) then
+			TerrainBuilder.SetFeatureType(plot, g_FEATURE_ICE);
+			TerrainBuilder.AddIce(plot:GetIndex(), iE); 
+		end
+
+		return true;
 	end
 end
 
