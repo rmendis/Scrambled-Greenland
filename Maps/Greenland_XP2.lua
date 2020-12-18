@@ -72,6 +72,8 @@ function GenerateMap()
 	AddRivers();
 
 	AddFeatures();
+
+	TerrainBuilder.AnalyzeChokepoints();
 	
 	print("Adding cliffs");
 	AddCliffs(plotTypes, terrainTypes);
