@@ -23,7 +23,7 @@ local g_continentsFrac = nil;
 local g_iNumTotalLandTiles = 0; 
 local g_CenterX = 18;
 local g_CenterY = 35;
-local featureGen = nil;
+local featuregen = nil;
 
 -------------------------------------------------------------------------------
 function GenerateMap()
