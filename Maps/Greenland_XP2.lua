@@ -295,7 +295,7 @@ function AddFeatures()
 		rainfall = 1 + TerrainBuilder.GetRandomNumber(3, "Random Rainfall - Lua");
 	end
 	
-	local args = {rainfall = rainfall, iJunglePercent = 0, iReefPercent = 3, iIcePercent = 40}	-- no rainforest
+	local args = {rainfall = rainfall, iJunglePercent = 0, iReefPercent = 2, iIcePercent = 25}	-- no rainforest
 	featuregen = FeatureGenerator.Create(args);
 
 	featuregen:AddFeatures(true, true);  --second parameter is whether or not rivers start inland);
@@ -514,7 +514,7 @@ function FeatureGenerator:AddIceToMap()
 		local iPercentNeeded = 100 * iPermanentIceTiles / iWaterTilesOnEdges;
 
 		for x = 0, self.iGridW - 1, 1 do
-			for y = self.iGridH - 1, 0, -1 do
+			for y = self.iGridH - 1, self.iGridH - 10, -1 do
 				local i = y * self.iGridW + x;
 				local plot = Map.GetPlotByIndex(i);
 				if (plot ~= nil) then
@@ -573,7 +573,7 @@ function FeatureGenerator:AddIceToMap()
 					end
 					if (TerrainBuilder.GetRandomNumber(100, "Permanent Ice") <= iFinalPercentNeeded) then
 					    local plot = Map.GetPlotByIndex(targetPlot.PlotIndex);
-						AddIceAtPlot(plot, x, y, kPhaseDetails.RandomEventEnum); 
+						AddIceAtPlot(plot, plot:GetX(), plot:GetY(), kPhaseDetails.RandomEventEnum); 
 					end
 				end
 			end
