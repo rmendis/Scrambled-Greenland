@@ -7,6 +7,9 @@
 		<!-- for Standard Rules -->
 		<Row Domain="StandardMaps" File="{9E6D91F0-4B82-4E85-9C6C-DAE7F58A089A}Maps/Greenland.lua" Name="LOC_GREENLAND_MAP_NAME" Description="LOC_GREENLAND_MAP_DESCRIPTION"/>
 
+		<!-- for Red Death -->
+		<Row Domain="Maps:CivRoyalScenarioMaps" File="{9E6D91F0-4B82-4E85-9C6C-DAE7F58A089A}Maps/Greenland.lua" Name="LOC_GREENLAND_MAP_NAME" Description="LOC_GREENLAND_MAP_DESCRIPTION"/>
+
 		<!-- for GS -->
 		<Row Domain="Maps:Expansion2Maps" File="{9E6D91F0-4B82-4E85-9C6C-DAE7F58A089A}Maps/Greenland_XP2.lua" Name="LOC_GREENLAND_MAP_NAME" Description="LOC_GREENLAND_MAP_DESCRIPTION"/>
 	</Maps>
