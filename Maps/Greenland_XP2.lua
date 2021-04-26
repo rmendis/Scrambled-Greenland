@@ -163,40 +163,72 @@ function GeneratePlotTypes(world_age)
 		{19, 38, 45},
 		{20, 5, 25},
 		{20, 39, 45},
-		{21, 6, 26},
+		{21, 6, 14}, 
+		{21, 16, 26}, 
 		{21, 40, 45},
-		{22, 6, 27},
+		{22, 6, 12}, 
+		{22, 16, 27},
 		{22, 42, 44},
-		{23, 7, 29},
+		{23, 7, 12}, 
+		{23, 19, 29},
 		{23, 42, 43},
-		{24, 8, 30},
-		{25, 6, 31},
-		{26, 5, 32},
-		{27, 6, 32},
-		{28, 6, 33},
-		{29, 7, 33},
-		{30, 7, 33},
-		{31, 6, 33},
-		{32, 6, 33},
-		{33, 7, 32},
-		{34, 6, 32},
-		{35, 6, 32},
-		{36, 7, 31},
-		{37, 6, 31},
-		{38, 6, 32},
-		{39, 6, 31},
-		{40, 6, 32},
-		{41, 6, 32},
-		{42, 6, 32},
-		{43, 5, 31},
-		{44, 2, 30},
-		{45, 1, 30},
-		{46, 1, 30},
-		{47, 1, 29},
-		{48, 1, 28},
-		{49, 2, 29},
-		{50, 1, 28},
-		{51, 2, 28},
+		{24, 8, 14},
+		{24, 19, 30},
+		{25, 6, 14},
+		{25, 18, 31},
+		{26, 5, 15},
+		{26, 20, 32},
+		{27, 6, 17},
+		{27, 21, 32},
+		{28, 6, 17},
+		{28, 21, 33},
+		{29, 7, 17},
+		{29, 21, 33},
+		{30, 7, 18},
+		{30, 20, 33},
+		{31, 6, 16},
+		{31, 20, 33},
+		{32, 6, 15},
+		{32, 20, 33},
+		{33, 7, 16},
+		{33, 18, 32},
+		{34, 6, 15},
+		{34, 17, 32},
+		{35, 6, 15},
+		{35, 17, 32},
+		{36, 7, 15},
+		{36, 18, 31},
+		{37, 6, 15}, 
+		{37, 19, 31},
+		{38, 6, 15},
+		{38, 20, 32},
+		{39, 6, 15},
+		{39, 20, 31},
+		{40, 6, 15},
+		{40, 20, 32},
+		{41, 6, 14},
+		{41, 20, 32},
+		{42, 6, 14},
+		{42, 18, 32},
+		{43, 5, 14},
+		{43, 18, 31},
+		{44, 2, 13},
+		{44, 19, 30},
+		{45, 1, 11},
+		{45, 19, 30},
+		{46, 1, 11},
+		{46, 20, 30},
+		{47, 1, 10},
+		{47, 18, 18},
+		{47, 21, 29},
+		{48, 1, 10},
+		{48, 19, 28},
+		{49, 2, 10},
+		{49, 18, 29},
+		{50, 1, 13},
+		{50, 20, 28},
+		{51, 2, 16},
+		{51, 19, 28},
 		{52, 4, 28},
 		{53, 5, 27},
 		{54, 6, 26},
@@ -207,7 +239,6 @@ function GeneratePlotTypes(world_age)
 		{58, 25, 26},
 		{59, 15, 22},
 		{60, 18, 20}};
-
 		
 	for i, v in ipairs(landStrips) do
 		local y = v[1] + yOffset; 
@@ -513,12 +544,28 @@ function FeatureGenerator:AddIceToMap()
 	if (iWaterTilesOnEdges > 0) then
 		local iPercentNeeded = 100 * iPermanentIceTiles / iWaterTilesOnEdges;
 
+		-- arctic ice sheet
 		for x = 0, self.iGridW - 1, 1 do
 			for y = self.iGridH - 1, self.iGridH - 10, -1 do
 				local i = y * self.iGridW + x;
 				local plot = Map.GetPlotByIndex(i);
 				if (plot ~= nil) then
 					if(TerrainBuilder.CanHaveFeature(plot, g_FEATURE_ICE) == true and IsAdjacentToLandPlot(x, y) == false) then
+						if (TerrainBuilder.GetRandomNumber(100, "Permanent Ice") <= iPercentNeeded) then
+							AddIceAtPlot(plot, x, y, -1); 
+						end
+					end
+				end
+			end
+		end
+
+		-- internal glacier
+		for x = 10, 21, 1 do
+			for y = 53, 10, -1 do
+				local i = y * self.iGridW + x;
+				local plot = Map.GetPlotByIndex(i);
+				if (plot ~= nil) then
+					if(TerrainBuilder.CanHaveFeature(plot, g_FEATURE_ICE) == true) then
 						if (TerrainBuilder.GetRandomNumber(100, "Permanent Ice") <= iPercentNeeded) then
 							AddIceAtPlot(plot, x, y, -1); 
 						end
@@ -583,6 +630,14 @@ end
 
 ------------------------------------------------------------------------------
 function AddIceAtPlot(plot, iX, iY, iE)
+
+	-- internal ice shelf
+	if ((iY > 19 and iY < 53) and (iX > 9 and iX < 22)) then
+		TerrainBuilder.SetFeatureType(plot, g_FEATURE_ICE);
+		TerrainBuilder.AddIce(plot:GetIndex(), iE); 
+	end 
+
+	-- arctic ice shelf
 	local iV = TerrainBuilder.GetRandomNumber(12, "Random variance");
 	local lat = (iY - g_iH/2 + iV)/(g_iH/2);	-- variance to make a more natural looking ice shelf
 	
