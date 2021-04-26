@@ -484,6 +484,13 @@ end
 
 ------------------------------------------------------------------------------
 function FeatureGenerator:AddIceAtPlot(plot, iX, iY)
+
+	-- internal ice shelf
+	if ((iY > 19 and iY < 53) and (iX > 9 and iX < 22)) then
+		TerrainBuilder.SetFeatureType(plot, g_FEATURE_ICE);
+	end 
+
+	-- arctic ice shelf
 	local iV = TerrainBuilder.GetRandomNumber(12, "Random variance");
 	lat = (iY - self.iGridH/2 + iV)/(self.iGridH/2);	-- variance to make a more natural looking ice shelf
 	
