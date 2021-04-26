@@ -222,7 +222,6 @@ function GeneratePlotTypes()
 		{58, 25, 26},
 		{59, 15, 22},
 		{60, 18, 20}};
-
 		
 	for i, v in ipairs(landStrips) do
 		local y = v[1] + yOffset; 
