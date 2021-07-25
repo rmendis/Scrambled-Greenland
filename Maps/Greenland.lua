@@ -22,6 +22,7 @@ local g_continentsFrac = nil;
 local g_iNumTotalLandTiles = 0; 
 local g_CenterX = 18;
 local g_CenterY = 35;
+local variationFrac = nil;
 
 -------------------------------------------------------------------------------
 function GenerateMap()
@@ -365,6 +366,11 @@ function GenerateTerrainTypesGreenland(plotTypes, iW, iH, iFlags, bNoCoastalMoun
 	iGrassTop = plains:GetHeight(95);
 	iGrassBottom = plains:GetHeight(35);
 
+	-- variation fractal for use to work out lat.
+	variationFrac = Fractal.Create(iW, iH,  
+									grain_amount, iFlags, 
+									fracXExp, fracYExp);
+
 	for iX = 0, iW - 1 do
 		for iY = 0, iH - 1 do
 			local index = (iY * iW) + iX;
@@ -491,10 +497,9 @@ function FeatureGenerator:AddIceAtPlot(plot, iX, iY)
 	end 
 
 	-- arctic ice shelf
-	local iV = TerrainBuilder.GetRandomNumber(12, "Random variance");
-	lat = (iY - self.iGridH/2 + iV)/(self.iGridH/2);	-- variance to make a more natural looking ice shelf
+	local lat = GetLatitudeAtPlot(variationFrac, iX, iY);
 	
-	if (lat > 0.78) then
+	if (lat > 0.7 and iY > g_CenterY) then
 		local iScore = TerrainBuilder.GetRandomNumber(100, "Resource Placement Score Adjust");
 
 		iScore = iScore + lat * 100;
