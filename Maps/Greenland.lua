@@ -22,7 +22,7 @@ local g_continentsFrac = nil;
 local g_iNumTotalLandTiles = 0; 
 local g_CenterX = 18;
 local g_CenterY = 35;
-local variationFrac = nil;
+local greenland = nil;
 
 -------------------------------------------------------------------------------
 function GenerateMap()
@@ -339,37 +339,13 @@ function GenerateTerrainTypesGreenland(plotTypes, iW, iH, iFlags, bNoCoastalMoun
 	local fracYExp = -1;
 	local grain_amount = 3;
 
-	snow = Fractal.Create(iW, iH, 
+	greenland = Fractal.Create(iW, iH, 
 									grain_amount, iFlags, 
 									fracXExp, fracYExp);
-									
-	iSnowTop = snow:GetHeight(85);
 
-	tundra = Fractal.Create(iW, iH, 
-									grain_amount, iFlags, 
-									fracXExp, fracYExp);
+	local iSnowTop = greenland:GetHeight(100);
 																		
-	iTundraTop = tundra:GetHeight(100);
-	iTundraBottom = tundra:GetHeight(35);
-
-	plains = Fractal.Create(iW, iH, 
-									grain_amount, iFlags, 
-									fracXExp, fracYExp);
-																		
-	iPlainsTop = plains:GetHeight(90);
-	iPlainsBottom = plains:GetHeight(45);
-
-	grass = Fractal.Create(iW, iH, 
-									grain_amount, iFlags, 
-									fracXExp, fracYExp);
-																		
-	iGrassTop = plains:GetHeight(95);
-	iGrassBottom = plains:GetHeight(35);
-
-	-- variation fractal for use to work out lat.
-	variationFrac = Fractal.Create(iW, iH,  
-									grain_amount, iFlags, 
-									fracXExp, fracYExp);
+	local iGrassBottom = greenland:GetHeight(0);
 
 	for iX = 0, iW - 1 do
 		for iY = 0, iH - 1 do
@@ -395,63 +371,74 @@ function GenerateTerrainTypesGreenland(plotTypes, iW, iH, iFlags, bNoCoastalMoun
 			local lat = (iY - iH/2)/(iH/2);
 			local long = (iX - iW/2)/(iW/2);
 
-			local iDistanceFromCenter = Map.GetPlotDistance (iX, iY, g_CenterX, g_CenterY);
-
-			local snowVal = snow:GetHeight(iX, iY);
-			local tundraVal = tundra:GetHeight(iX, iY);
-			local plainsVal = plains:GetHeight(iX, iY);
-			local grassVal = grass:GetHeight(iX, iY);
+			local greenlandVal = greenland:GetHeight(iX, iY);
 
 			-- Iceland
 			if (long > 0.5 and lat < -0.25) then
-				local iSnowBottom = snow:GetHeight(80);
+				local iSnowBottom = greenland:GetHeight(80);
+
+				local iTundraTop = iSnowBottom;
+				local iTundraBottom = greenland:GetHeight(65);
+																		
+				local iPlainsTop = iTundraBottom;
+				local iPlainsBottom = greenland:GetHeight(45);
+		
+				local iGrassTop = iPlainsBottom;
 
 				if (plotTypes[index] == g_PLOT_TYPE_MOUNTAIN) then
 					terrainTypes[index] = g_TERRAIN_TYPE_TUNDRA_MOUNTAIN;
 
-					if ((grassVal >= iGrassBottom) and (grassVal <= iGrassTop)) then
+					if ((greenlandVal >= iGrassBottom) and (greenlandVal <= iGrassTop)) then
 						terrainTypes[index] = g_TERRAIN_TYPE_GRASS_MOUNTAIN;
-					elseif ((plainsVal >= iPlainsBottom) and (plainsVal <= iPlainsTop)) then
+					elseif ((greenlandVal >= iPlainsBottom) and (greenlandVal <= iPlainsTop)) then
 						terrainTypes[index] = g_TERRAIN_TYPE_PLAINS_MOUNTAIN;
-					elseif ((snowVal >= iSnowBottom) and (snowVal <= iSnowTop)) then
+					elseif ((greenlandVal >= iSnowBottom) and (greenlandVal <= iSnowTop)) then
 						terrainTypes[index] = g_TERRAIN_TYPE_SNOW_MOUNTAIN;
 					end
 
 				elseif (plotTypes[index] ~= g_PLOT_TYPE_OCEAN) then
 					terrainTypes[index] = g_TERRAIN_TYPE_TUNDRA;
 
-					if ((grassVal >= iGrassBottom) and (grassVal <= iGrassTop)) then
+					if ((greenlandVal >= iGrassBottom) and (greenlandVal <= iGrassTop)) then
 						terrainTypes[index] = g_TERRAIN_TYPE_GRASS;
-					elseif ((plainsVal >= iPlainsBottom) and (plainsVal <= iPlainsTop)) then
+					elseif ((greenlandVal >= iPlainsBottom) and (greenlandVal <= iPlainsTop)) then
 						terrainTypes[index] = g_TERRAIN_TYPE_PLAINS;
-					elseif ((snowVal >= iSnowBottom) and (snowVal <= iSnowTop)) then
+					elseif ((greenlandVal >= iSnowBottom) and (greenlandVal <= iSnowTop)) then
 						terrainTypes[index] = g_TERRAIN_TYPE_SNOW;
 					end
 				end
 
 			-- Greenland
 			else
-				local iSnowBottom = snow:GetHeight(iDistanceFromCenter/iH * 100);
+				local iSnowBottom = greenland:GetHeight(((iH - iY)/iH * 100) + 5);
+
+				local iTundraTop = iSnowBottom;
+				local iTundraBottom = greenland:GetHeight(5);
+																		
+				local iPlainsTop = iTundraBottom;
+				local iPlainsBottom = greenland:GetHeight(2);
+		
+				local iGrassTop = iPlainsBottom;
 
 				if (plotTypes[index] == g_PLOT_TYPE_MOUNTAIN) then
 					terrainTypes[index] = g_TERRAIN_TYPE_GRASS_MOUNTAIN;
 
-					if ((snowVal >= iSnowBottom) and (snowVal <= iSnowTop)) then
+					if ((greenlandVal >= iSnowBottom) and (greenlandVal <= iSnowTop)) then
 						terrainTypes[index] = g_TERRAIN_TYPE_SNOW_MOUNTAIN;
-					elseif ((tundraVal >= iTundraBottom) and (tundraVal <= iTundraTop)) then
+					elseif ((greenlandVal >= iTundraBottom) and (greenlandVal <= iTundraTop)) then
 						terrainTypes[index] = g_TERRAIN_TYPE_TUNDRA_MOUNTAIN;
-					elseif ((plainsVal >= iPlainsBottom) and (plainsVal <= iPlainsTop)) then
+					elseif ((greenlandVal >= iPlainsBottom) and (greenlandVal <= iPlainsTop)) then
 						terrainTypes[index] = g_TERRAIN_TYPE_PLAINS_MOUNTAIN;
 					end
 
 				elseif (plotTypes[index] ~= g_PLOT_TYPE_OCEAN) then
 					terrainTypes[index] = g_TERRAIN_TYPE_GRASS;
 				
-					if ((snowVal >= iSnowBottom) and (snowVal <= iSnowTop)) then
+					if ((greenlandVal >= iSnowBottom) and (greenlandVal <= iSnowTop)) then
 						terrainTypes[index] = g_TERRAIN_TYPE_SNOW;
-					elseif ((tundraVal >= iTundraBottom) and (tundraVal <= iTundraTop)) then
+					elseif ((greenlandVal >= iTundraBottom) and (greenlandVal <= iTundraTop)) then
 						terrainTypes[index] = g_TERRAIN_TYPE_TUNDRA;
-					elseif ((plainsVal >= iPlainsBottom) and (plainsVal <= iPlainsTop)) then
+					elseif ((greenlandVal >= iPlainsBottom) and (greenlandVal <= iPlainsTop)) then
 						terrainTypes[index] = g_TERRAIN_TYPE_PLAINS;
 					end
 				end
@@ -497,7 +484,7 @@ function FeatureGenerator:AddIceAtPlot(plot, iX, iY)
 	end 
 
 	-- arctic ice shelf
-	local lat = GetLatitudeAtPlot(variationFrac, iX, iY);
+	local lat = GetLatitudeAtPlot(greenland, iX, iY);
 	
 	if (lat > 0.7 and iY > g_CenterY) then
 		local iScore = TerrainBuilder.GetRandomNumber(100, "Resource Placement Score Adjust");
